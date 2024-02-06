@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>База сотрудников</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">База сотрудников</h2>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form method="get" action="/catalog/search">
+                            <div class="filters" style="padding-left: 20px;padding-top: 15px;">
+                                <div class="filter-item">
+                                    <h3>Семейное положение</h3>
+                                    <select class="form-select mb-2" name="marital">
+                                        <option th:each="i : ${maritals}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == marSelect}"></option>
+                                    </select>
+                                    <h3>Место рождения</h3>
+                                    <select class="form-select mb-2" name="origin">
+                                        <option th:each="i : ${origins}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == oriSelect}"></option>
+                                    </select>
+                                    <h3>Гражданство</h3>
+                                    <select class="form-select mb-2" name="citizenship">
+                                        <option th:each="c : ${citizenships}" th:value="${c}" th:label="${c.name}"
+                                                th:selected="${c == citSelect}"></option>
+                                    </select>
+                                    <h3>Пенсионер</h3>
+                                    <select class="form-select mb-2" name="retiree">
+                                        <option th:each="i : ${yesnos}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == retSelect}"></option>
+                                    </select>
+                                    <h3>Военнообязанный</h3>
+                                    <select class="form-select mb-2" name="conscripted">
+                                        <option th:each="i : ${yesnos}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == conSelect}"></option>
+                                    </select>
+                                    <h3>Инвалидность</h3>
+                                    <select class="form-select mb-2" name="disability">
+                                        <option th:each="i : ${disabilities}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == disSelect}"></option>
+                                    </select>
+                                </div>
+                                <div class="filter-item">
+                                    <button class="btn btn-primary" type="submit" style="margin-right: 10px;">Найти
+                                    </button>
+                                    <a class="btn btn-secondary" role="button" href="/catalog">Сбросить</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-4" th:each="h : ${humans}">
+                                <a th:href="'/humans/' + ${h.id}">
+                                    <div class="row align-items-center p-3">
+                                        <div class="col-4">
+                                            <img class="img-fluid d-block mx-auto"
+                                                 th:src="'/img/' + ${h.primarys.photo}">
+                                        </div>
+                                        <div class="col" th:text="${h.primarys.getFio()}"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

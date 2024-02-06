@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Документы</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Документы</h2>
+            </div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form method="get" action="/document/search">
+                            <div class="filters" style="padding-left: 20px;padding-top: 15px;">
+                                <div class="row">
+                                    <a class="btn btn-primary" role="button" href="/document/add">Добавить документ</a>
+                                </div>
+                            </div>
+                            <div class="filters" style="padding-left: 20px;padding-top: 15px;">
+                                <div class="filter-item">
+                                    <h3>Подписан</h3>
+                                    <select class="form-select mb-2" name="documentStatus">
+                                        <option th:each="i : ${documentStatuses}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == documentStatus}"></option>
+                                    </select>
+                                    <h3>Тип документа</h3>
+                                    <select class="form-select mb-2" name="documentType">
+                                        <option th:each="i : ${documentTypes}" th:value="${i}" th:label="${i.name}"
+                                                th:selected="${i == documentType}"></option>
+                                    </select>
+                                    <h3>Отдел документа</h3>
+                                    <select class="form-select mb-2" name="documentDepartment">
+                                        <option th:each="i : ${documentDepartments}" th:value="${i}"
+                                                th:label="${i.name}"
+                                                th:selected="${i == documentDepartment}"></option>
+                                    </select>
+                                    <h3>Дата</h3>
+                                    <input class="form-control" type="date" name="date" th:value="${date}">
+                                </div>
+                                <div class="filter-item">
+                                    <button class="btn btn-primary" type="submit" style="margin-right: 10px;">Найти
+                                    </button>
+                                    <a class="btn btn-secondary" role="button" href="/document/all">Сбросить</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-9 p-4" style="font-size: 1.2em">
+                        <div class="row">
+                            <div class="col" align="center">Идентификатор</div>
+                            <div class="col" align="center">Название</div>
+                            <div class="col" align="center">Бизнес-процесс</div>
+                            <div class="col" align="center">Дата</div>
+                            <hr>
+                        </div>
+                        <div th:each="d : ${documents}" class="row">
+                            <a th:href="'/document/' + ${d.id}">
+                                <div class="row">
+                                    <div class="col" th:text="${d.number}"></div>
+                                    <div class="col" th:text="${d.name}"></div>
+                                    <div class="col" align="center" th:text="${d.businessProcess.name}"></div>
+                                    <div class="col" align="center" th:text="${d.date}"></div>
+                                </div>
+                            </a>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

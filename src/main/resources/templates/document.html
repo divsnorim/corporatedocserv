@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${document.name}"></title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page product-page">
+    <section class="clean-block clean-product">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info"
+                    th:text="${document.name}"></h2>
+            </div>
+            <div class="block-content">
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <a class="btn btn-primary" th:href="@{/img/{id}(id=${document.document})}"
+                           target="_blank">Документ</a>
+                    </div>
+                    <div class="col-auto" th:if="${document.owner.id == user.id}">
+                        <a th:href="'/document/edit/' + ${document.id}" class="btn btn-success">Обновить
+                            документ</a>
+                    </div>
+                    <div class="col-auto" th:if="${document.owner.id == user.id}">
+                        <a th:href="'/document/delete/' + ${document.id}" class="btn btn-danger">Удалить
+                            документ</a>
+                    </div>
+                    <div class="col" th:if="${document.owner.id == user.id}">
+                        <form th:action="'/document/transfer/' + ${document.id}" method="post">
+                            <div class="row">
+                                <div class="col">
+                                    <select class="form-select mb-2" name="documentDepartment">
+                                        <option th:each="i : ${documentDepartments}" th:value="${i}"
+                                                th:label="${i.name}"
+                                                th:selected="${i == document.department}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="submit" class="btn btn-primary">Перенаправить в
+                                        отдел
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <td class="stat">Подпись</td>
+                            <td th:text="${document.status.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Владелец</td>
+                            <td th:text="${document.owner.primarys.getFio()}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Бизнес-процесс</td>
+                            <td th:text="${document.businessProcess.name}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Идентификатор документа</td>
+                            <td th:text="${document.number}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Тип документа</td>
+                            <td th:text="${document.type.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Отдел документа</td>
+                            <td th:text="${document.department.getName()}"></td>
+                        </tr>
+                        <tr>
+                            <td class="stat">Дата</td>
+                            <td th:text="${document.date}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="lead" th:text="${document.description}"></p>
+                <div class="row" th:if="${role == 'MANAGER' and document.status.name() != 'SIGNED'}">
+                    <div class="col-auto" th:if="${document.status.name() == 'NOT_SIGNED'}">
+                        <a class="btn btn-primary" th:href="${'/document/' + document.id + '/modification'}">На
+                            доработку</a>
+                    </div>
+                    <div class="col-auto">
+                        <a class="btn btn-success" th:href="${'/document/' + document.id + '/signed'}">Подписать</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <div class="block-content">
+                <form th:action="${'/document/comment/add/' + document.id}" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" name="text" class="form-control" required placeholder="Введите комментарий">
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div th:each="i : ${document.documentComments}" class="mb-2">
+                    <p class="lead" th:text="${i.owner.primarys.fio + ' | ' + i.date}"></p>
+                    <p th:text="${i.text}"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>

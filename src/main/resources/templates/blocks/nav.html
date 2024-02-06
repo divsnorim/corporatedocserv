@@ -1,0 +1,42 @@
+<nav th:fragment="nav" class="navbar navbar-light navbar-expand-lg bg-white clean-navbar">
+    <div class="container"><a class="navbar-brand logo" href="/">CorporateDoc</a>
+        <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
+                class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-1">
+            <ul class="navbar-nav ms-auto align-items-center text-center">
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/document/all">Документы</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/document/my">Мои документы</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/profile">Мой профиль</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/reviews">Коммуникации</a></li>
+                <li th:if="${role == 'MANAGER' and role == 'CLIENT'}" class="nav-item"><a class="nav-link" href="/apps">Запрос документов</a></li>
+                <li th:if="${role == 'MANAGER'}" class="nav-item">
+                    <div class="nav-item dropdown" style="padding: 8px 16px;">
+                        <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
+                           href="#">Вкладки</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/humans/add">Добавить нового пользователя</a>
+                            <a class="dropdown-item" href="/stats">Аналитика</a>
+                            <a class="dropdown-item" href="/catalog">База сотрудников</a>
+                            <a class="dropdown-item" href="/businessProcess">Бизнес-процессы</a>
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${role == 'ADMIN'}" class="nav-item">
+                    <div class="nav-item dropdown" style="padding: 8px 16px;">
+                        <a class="dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown"
+                           href="#">Вкладки</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/users">Управление ролями</a>
+                            <a class="dropdown-item" href="/stats">Аналитика</a>
+                            <a class="dropdown-item" href="/catalog">База сотрудников</a>
+                            <a class="dropdown-item" href="/businessProcess">Бизнес-процессы</a>
+                        </div>
+                    </div>
+                </li>
+                <li th:if="${role == 'NOT'}" class="nav-item"><a class="nav-link" href="/login">Вход</a></li>
+                <li th:if="${role == 'NOT'}" class="nav-item"><a class="nav-link" href="/reg">Регистрация</a></li>
+                <li th:if="${role != 'NOT'}" class="nav-item"><a class="nav-link" href="/logout">Выход</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

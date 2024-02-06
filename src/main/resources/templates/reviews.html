@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Коммуникации</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page catalog-page">
+    <section class="clean-block clean-catalog">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Коммуникации</h2>
+            </div>
+            <div class="content" style="padding: 20px">
+                <form th:if="${role != 'NOT'}" action="/reviews/add" method="post" class="mb-5">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" name="review" class="form-control" placeholder="Напишите..."></div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary">Добавить</button>
+                        </div>
+                    </div>
+                </form>
+                <div th:each="i : ${reviews}" class="row">
+                    <div class="col-auto">
+                        <p class="lead"
+                           th:text="${i.owner.primarys.surname + ' ' + i.owner.primarys.name + ' ' + i.owner.primarys.patronymic + ' | ' + i.date}"></p>
+                    </div>
+                    <div th:if="${role != 'NOT'}" class="col-auto">
+                        <a th:href="'/reviews/' + ${i.id}" class="btn btn-primary">Детали</a>
+                    </div>
+                    <div th:if="${role == 'ADMIN'}" class="col-auto">
+                        <a th:href="'/reviews/' + ${i.id} + '/delete'" class="btn btn-danger">Удалить</a>
+                    </div>
+                    <div class="col-12">
+                        <p th:text="${i.review}"></p>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

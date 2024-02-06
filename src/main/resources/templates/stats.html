@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Аналитика</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page product-page">
+    <section class="clean-block clean-product">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Аналитика</h2>
+            </div>
+            <div class="block-content">
+                <div class="row">
+                    <div class="col">
+                        <div id="topQuantity" class="w-100" style="height: 300px"></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div id="drawSigned" class="w-100" style="height: 300px"></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div id="drawMod" class="w-100" style="height: 300px"></div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col">
+                        <div id="drawNotSigned" class="w-100" style="height: 300px"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    var topQuantityName = /*[[${topQuantityName}]]*/ [];
+    var topQuantityNumber = /*[[${topQuantityNumber}]]*/ [];
+
+    var signedString = /*[[${signedString}]]*/ [];
+    var signedInt = /*[[${signedInt}]]*/ [];
+    var modString = /*[[${modString}]]*/ [];
+    var modInt = /*[[${modInt}]]*/ [];
+    var notSignedString = /*[[${notSignedString}]]*/ [];
+    var notSignedInt = /*[[${notSignedInt}]]*/ [];
+</script>
+
+<script src="/js/stats.js"></script>
+
+</body>
+
+</html>

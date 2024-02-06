@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Отпуска/Больничные</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+
+<div th:insert="blocks/nav :: nav"></div>
+
+<main class="page product-page">
+    <section class="clean-block clean-product">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Отпуска/Больничные</h2>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col-6">
+                    <div th:if="${message}" class="alert alert-warning text-center" role="alert">
+                        <strong th:text="${message}"></strong>
+                    </div>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="block-content">
+                <form th:action="'/humans/days/' + ${human.id}" method="post">
+                    <div class="row">
+                        <div class="col" align="center"><p class="lead">Начало</p></div>
+                        <div class="col" align="center"><p class="lead">Конец</p></div>
+                        <div class="col" align="center"><p class="lead">Вид</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col"><input class="form-control" type="date" name="begin" required></div>
+                        <div class="col"><input class="form-control" type="date" name="end" required></div>
+                        <div class="col">
+                            <select class="form-control" name="type" required>
+                                <option th:each="i : ${daysTypes}" th:value="${i}" th:label="${i.name}"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col">
+                            <input type="text" class="form-control" placeholder="Описание (опционально)" name="des">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="reset" class="btn btn-dark">Сбросить</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <div class="row" th:each="i : ${human.days}">
+                    <div class="col-12">
+                        <p class="lead" th:text="${i.type.name + ' - ' + i.dateBegin + ' - ' + i.dateEnd} "></p>
+                    </div>
+                    <div th:if="${i.des.length() > 0}">
+                        <p th:text="${i.des}"></p>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

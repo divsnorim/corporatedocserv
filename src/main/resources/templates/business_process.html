@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Бизнес-процессы</title>
+</head>
+
+<head th:insert="blocks/head :: head"></head>
+
+<body class="d-flex flex-column min-vh-100" style="background: url(&quot;/img/bg.jpg&quot;) top / cover;">
+<div th:insert="blocks/nav :: nav"></div>
+<main class="page product-page">
+    <section class="clean-block clean-product">
+        <div class="container">
+            <div class="block-heading">
+                <h2 class="text-info">Бизнес-процессы</h2>
+            </div>
+            <div class="block-content">
+                <form action="/businessProcess/add/" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-control" type="text" required name="name" placeholder="Название">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary w-100" type="submit">Добавить</button>
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <form th:each="i : ${businessProcess}" class="mb-2" th:action="${'/businessProcess/edit/' + i.id}" method="post">
+                    <div class="row">
+                        <div class="col">
+                            <input class="form-control" type="text" required name="name" placeholder="Название" th:value="${i.name}">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-primary w-100" type="submit" >Обновить</button>
+                        </div>
+                        <div class="col-auto">
+                            <a th:href="${'/businessProcess/delete/' + i.id}" class="btn btn-danger w-100">Удалить</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+<footer th:insert="blocks/footer :: footer" class="page-footer dark mt-auto"></footer>
+
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.11.1/baguetteBox.min.js"></script>
+<script src="/js/vanilla-zoom.js"></script>
+<script src="/js/theme.js"></script>
+</body>
+
+</html>
