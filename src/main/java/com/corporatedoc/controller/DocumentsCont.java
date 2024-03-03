@@ -96,6 +96,7 @@ public class DocumentsCont extends Attributes {
     public String DocumentAdd(Model model, @RequestParam String name, @RequestParam String description, @RequestParam Long businessProcessId, @RequestParam int number, @RequestParam DocumentType documentType, @RequestParam DocumentDepartment documentDepartment, @RequestParam String date, @RequestParam MultipartFile document) {
         String result = "";
         try {
+            uploadImg = "D:/bsuir/7 semester/corporate/src/main/resources/img";
             if (document != null && !Objects.requireNonNull(document.getOriginalFilename()).isEmpty()) {
                 String uuidFile = UUID.randomUUID().toString();
                 File uploadDir = new File(uploadImg);
