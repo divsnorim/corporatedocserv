@@ -31,7 +31,7 @@ public class RegContTest {
 
     @Test
     public void testRegExistingUser() {
-        when(usersRepo.findAll()).thenReturn(Collections.singletonList(new Users("existingUser", "password", Role.CLIENT)));
+        when(usersRepo.findAll()).thenReturn(Collections.singletonList(new Users("accountant", "password", Role.CLIENT)));
 
         String result = regCont.regUser(model, "accountant", "password");
 
